@@ -148,14 +148,20 @@ client.on("interactionCreate", async interaction => {
     const scrollformeUrl = process.env.SCROLLFORME_URL;
     const scrollformeToken = process.env.SCROLLFORME_ADMIN_TOKEN;
     if (scrollformeUrl && scrollformeToken) {
-      await fetch(`${scrollformeUrl}/api/pre-approve`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${scrollformeToken}`
-        },
-        body: JSON.stringify({ discordUsername: record.guild_nickname, pin })
-      }).catch(err => console.error("Failed to register pre-approval on scrollforme:", err));
+      try {
+        const res = await fetch(`${scrollformeUrl}/api/pre-approve`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${scrollformeToken}`
+          },
+          body: JSON.stringify({ discordUsername: record.guild_nickname, pin })
+        });
+        const text = await res.text();
+        console.log(`pre-approve response: ${res.status} ${text}`);
+      } catch (err) {
+        console.error("Failed to register pre-approval on scrollforme:", err);
+      }
     } else {
       console.warn("SCROLLFORME_URL or SCROLLFORME_ADMIN_TOKEN not set — skipping pre-approval registration.");
     }
@@ -208,7 +214,7 @@ client.on("interactionCreate", async interaction => {
   }
 });
 
-client.once("ready", () => {
+client.once("clientReady", () => {
   console.log(`Bot logged in as ${client.user.tag}`);
 });
 
