@@ -1,2 +1,2 @@
 echo ".env" >> .gitignore
-echo "node_modules" >> .gitignore
+echo "node_modules" >> .gitignore.DS_Store
