@@ -1,10 +1,4 @@
-const {
-  SlashCommandBuilder,
-  ModalBuilder,
-  TextInputBuilder,
-  TextInputStyle,
-  ActionRowBuilder
-} = require("discord.js");
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,25 +6,21 @@ module.exports = {
     .setDescription("Begin the uploader verification process"),
 
   async execute(interaction) {
-    const modal = new ModalBuilder()
-      .setCustomId("verifyModal")
-      .setTitle("Upload Access Verification");
-
-    const wantUpload = new TextInputBuilder()
-      .setCustomId("wantUpload")
-      .setLabel("Do you want to upload to scrollforme.com? (yes/no)")
-      .setStyle(TextInputStyle.Short);
-
-    const exampleVid = new TextInputBuilder()
-      .setCustomId("exampleVid")
-      .setLabel("Paste a link to an example video:")
-      .setStyle(TextInputStyle.Paragraph);
-
-    modal.addComponents(
-      new ActionRowBuilder().addComponents(wantUpload),
-      new ActionRowBuilder().addComponents(exampleVid)
+    const row = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId("verify_yes")
+        .setLabel("Yes")
+        .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId("verify_no")
+        .setLabel("No")
+        .setStyle(ButtonStyle.Secondary)
     );
 
-    await interaction.showModal(modal);
+    await interaction.reply({
+      content: "Do you want to upload to scrollforme.com?",
+      components: [row],
+      ephemeral: true
+    });
   }
 };
