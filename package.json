@@ -1,0 +1,25 @@
+{
+  "name": "multigifs_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "deploy-commands": "node deploy-commands.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sid-gm/multigifs-discord-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sid-gm/multigifs-discord-bot/issues"
+  },
+  "homepage": "https://github.com/sid-gm/multigifs-discord-bot#readme",
+  "dependencies": {
+    "discord.js": "^14.26.4",
+    "dotenv": "^17.4.2"
+  }
+}
